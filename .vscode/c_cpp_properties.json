@@ -1,22 +1,21 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/Dependencies/include",
-                "C:\\Users\\zhaoys-c\\AppData\\Local\\.xmake\\packages\\g\\glm\\0.9.9+8\\8335bab7c0314ab9921440de58961aac\\include"
+                "${workspaceFolder}/Dependencies/include"
             ],
             "defines": [
                 "_DEBUG"
             ],
             "windowsSdkVersion": "10.0.22621.0",
             "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cppStandard": "c++23",
             "intelliSenseMode": "windows-clang-x64",
-            "compilerPath": "C:/mingw64/bin/clang++.exe",
-            "compileCommands": "${workspaceFolder}/compile_commands.json"
+            "compilerPath": "/usr/bin/clang++",
+            "compileCommands": "${workspaceFolder}/.vscode/compile_commands.json"
         }
     ],
     "version": 4
