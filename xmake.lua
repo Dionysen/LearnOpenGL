@@ -1,0 +1,10 @@
+add_rules("mode.debug", "mode.release")
+add_requires("glm")
+
+target("opengl")
+    add_rules("win.sdk.application")
+    set_kind("binary")
+    add_files("src/*.cpp","src/*.c")
+    add_includedirs("/include","/Dependencies/include/glad", "Dependencies/include")
+    add_links("opengl32")
+    add_packages("glm")

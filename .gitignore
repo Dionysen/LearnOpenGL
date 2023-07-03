@@ -1,32 +1,39 @@
-# Prerequisites
-*.d
+# Xmake cache
+.xmake/
+build/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# MacOS Cache
+.DS_Store
 
-# Precompiled Headers
-*.gch
-*.pch
+# # Prerequisites
+# *.d
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# # Compiled Object files
+# *.slo
+# *.lo
+# *.o
+# *.obj
 
-# Fortran module files
-*.mod
-*.smod
+# # Precompiled Headers
+# *.gch
+# *.pch
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# # Compiled Dynamic libraries
+# *.so
+# *.dylib
+# *.dll
 
-# Executables
-*.exe
-*.out
-*.app
+# # Fortran module files
+# *.mod
+# *.smod
+
+# # Compiled Static libraries
+# *.lai
+# *.la
+# *.a
+# *.lib
+
+# # Executables
+# *.exe
+# *.out
+# *.app
