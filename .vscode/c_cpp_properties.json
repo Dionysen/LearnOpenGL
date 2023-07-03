@@ -9,9 +9,7 @@
                 "C:\\Users\\zhaoys-c\\AppData\\Local\\.xmake\\packages\\g\\glm\\0.9.9+8\\8335bab7c0314ab9921440de58961aac\\include"
             ],
             "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
+                "_DEBUG"
             ],
             "windowsSdkVersion": "10.0.22621.0",
             "cStandard": "c17",
