@@ -59,6 +59,8 @@
         "iomanip": "cpp",
         "span": "cpp",
         "variant": "cpp",
-        "glad.h": "c"
+        "glad.h": "c",
+        "ranges": "cpp",
+        "complex": "cpp"
     }
 }
