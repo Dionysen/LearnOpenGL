@@ -1,0 +1,11 @@
+[
+{
+  "directory": "/home/dionysen/Documents/LearnOpenGL",
+  "arguments": ["/usr/bin/clang", "-c", "-Qunused-arguments", "-m64", "-fvisibility=hidden", "-O3", "-Iinclude", "-IDependencies/include/glad", "-IDependencies/include", "-Ishaders", "-I", "/home/dionysen/.xmake/packages/g/glm/0.9.9+8/8e3967f609974e078b7179ff31828257/include", "-DNDEBUG", "-o", "build/.objs/opengl/p/x86_64/release/src/glad.c.o", "src/glad.c"],
+  "file": "src/glad.c"
+},
+{
+  "directory": "/home/dionysen/Documents/LearnOpenGL",
+  "arguments": ["/usr/bin/clang", "-c", "-Qunused-arguments", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-Iinclude", "-IDependencies/include/glad", "-IDependencies/include", "-Ishaders", "-I", "/home/dionysen/.xmake/packages/g/glm/0.9.9+8/8e3967f609974e078b7179ff31828257/include", "-DNDEBUG", "-o", "build/.objs/opengl/p/x86_64/release/src/main.cpp.o", "src/main.cpp"],
+  "file": "src/main.cpp"
+}]
