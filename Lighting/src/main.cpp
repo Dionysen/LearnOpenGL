@@ -192,6 +192,7 @@ int main()
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseMap);
+    glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, specularMap);
     // 立方体
     objectShader.use();
@@ -199,27 +200,20 @@ int main()
     objectShader.setVec3("light.position", glm::vec3(1.2f, 1.0f, 2.0f));   // 设置光源位置，下面还会将灯的位置放到此处
     objectShader.setVec3("viewPos", camera.Position);
 
-    objectShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
-    objectShader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
-    objectShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+
     objectShader.setFloat("material.shininess", 32.0f);
 
-    glm::vec3 lightColor;
-    lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
-    lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
-    lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));
-    glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
-    glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
 
-    objectShader.setVec3("light.ambient",  1.0f, 1.0f, 1.0f);
+    objectShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
     // objectShader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // 将光照调暗了一些以搭配场景
-    objectShader.setVec3("light.diffuse",  1.0f, 1.0f, 1.0f);
+    objectShader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f);
     objectShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f); 
 
-    objectShader.setVec3("material.ambient", 0.0f, 0.1f, 0.06f);
-    objectShader.setVec3("material.diffuse", 0.0f, 0.50980392f, 0.50980392f);
-    objectShader.setVec3("material.specular", 0.50196078f, 0.50196078f, 0.50196078f);
-    objectShader.setFloat("material.shininess", 32.0f);
+    objectShader.setFloat("light.constant", 1.0f);
+    objectShader.setFloat("light.linear", 0.09f);
+    objectShader.setFloat("light.quadratic", 0.032f);
+
+
 
     // view/projection transformations, 所有物体的视角和透视都是一样的，因此做一次变换即可
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
