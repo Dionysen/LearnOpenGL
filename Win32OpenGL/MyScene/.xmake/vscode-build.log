@@ -1,0 +1,31 @@
+checking for Microsoft Visual Studio (x64) version ... 2022
+checking for .Net SDK directory ... no
+error: ...mdir\core\sandbox\modules\import\core\base\scheduler.lua:56: dotnet not found!
+stack traceback:
+	@programdir\core\base\utils.lua:290: in function <@programdir\core\base\utils.lua:280>
+	[C]: in function 'error'
+	@programdir\core\base\os.lua:913: in function 'base/os.raiselevel'
+	(...tail calls...)
+	...mdir\core\sandbox\modules\import\core\base\scheduler.lua:56: in field 'co_start_withopt'
+	@programdir\modules\private\async\runjobs.lua:217: in function <@programdir\modules\private\async\runjobs.lua:162>
+	[C]: in function 'xpcall'
+	@programdir\core\base\utils.lua:280: in function 'base/utils.trycall'
+	@programdir\core\base\scheduler.lua:520: in function 'base/scheduler.co_group_begin'
+	...mdir\core\sandbox\modules\import\core\base\scheduler.lua:94: in field 'co_group_begin'
+	@programdir\modules\private\async\runjobs.lua:162: in function <@programdir\modules\private\async\runjobs.lua:56>
+	(...tail calls...)
+	@programdir\actions\build\build.lua:259: in function <@programdir\actions\build\build.lua:247>
+	(...tail calls...)
+	@programdir\actions\build\main.lua:109: in global '_do_build'
+	@programdir\actions\build\main.lua:180: in function <@programdir\actions\build\main.lua:173>
+	[C]: in function 'xpcall'
+	@programdir\core\base\utils.lua:280: in function 'base/utils.trycall'
+	@programdir\core\sandbox\modules\try.lua:117: in global 'try'
+	@programdir\actions\build\main.lua:171: in function <@programdir\actions\build\main.lua:133>
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	@programdir\core\base\utils.lua:280: in function 'base/utils.trycall'
+	(...tail calls...)
+	@programdir\core\base\task.lua:501: in function 'base/task.run'
+	@programdir\core\main.lua:298: in upvalue 'cotask'
+	@programdir\core\base\scheduler.lua:404: in function <@programdir\core\base\scheduler.lua:397>

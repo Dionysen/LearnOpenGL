@@ -1,0 +1,10 @@
+{
+    options = {
+        clean = true,
+        wdk = [[G:\Program Files\Windows Kits\10]]
+    },
+    mtimes = {
+        ["xmake.lua"] = 1688613589
+    },
+    recheck = false
+}

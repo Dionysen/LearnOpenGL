@@ -1,0 +1,41 @@
+# Xmake cache
+Win32OpenGL/.xmake/
+Win32OpenGL/build/
+MyScene/.xmake/
+MyScene/build/
+# MacOS Cache
+.DS_Store
+
+# # Prerequisites
+# *.d
+
+# # Compiled Object files
+# *.slo
+# *.lo
+# *.o
+# *.obj
+
+# # Precompiled Headers
+# *.gch
+# *.pch
+
+# # Compiled Dynamic libraries
+# *.so
+# *.dylib
+# *.dll
+
+# # Fortran module files
+# *.mod
+# *.smod
+
+# # Compiled Static libraries
+# *.lai
+# *.la
+# *.a
+# *.lib
+
+# # Executables
+# *.exe
+# *.out
+# *.app
+build
