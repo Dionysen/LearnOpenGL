@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "MyScene"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.ejs": "html",
+			"cmath": "cpp",
+			"string": "cpp"
+		}
+	}
+}

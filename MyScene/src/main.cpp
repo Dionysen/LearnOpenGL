@@ -82,7 +82,6 @@ int main()
   // ------------------------------------ 
   Shader objectShader("shaders/color.vs", "shaders/color.fs");
   Shader lightShader("shaders/light.vs", "shaders/light.fs");
-  Shader groundShader("shaders/ground.vs", "shaders/ground/fs");
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
@@ -144,29 +143,7 @@ int main()
       glm::vec3(-1.3f,  1.0f, -1.5f)
   };
 
-  float ground[] = {
-      0.5f,  0.0f,  0.5f,
-      -0.5f, 0.0f,  0.5f,
-      0.5f,  0.0f, -0.5f,
-      0.5f,  0.0f, -0.5f,
-      -0.5f, 0.0f, 0.5f,
-      -0.5f, 0.0f, -0.5f,
-  };
-
-  groundShader.use();
-  unsigned groundVBO, groundVAO;
-  glGenVertexArrays(1, &groundVAO);
-  glGenBuffers(1, &groundVBO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, groundVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(ground), ground, GL_STATIC_DRAW);
-
-  glBindVertexArray(groundVAO);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
-
   // first, configure the cube's VAO (and VBO)
-  objectShader.use();
   unsigned int VBO, cubeVAO;
   glGenVertexArrays(1, &cubeVAO);
   glGenBuffers(1, &VBO);
@@ -182,7 +159,6 @@ int main()
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
   glEnableVertexAttribArray(2);
 
-  lightShader.use();
   unsigned int lightCubeVAO;
   glGenVertexArrays(1, &lightCubeVAO);
   glBindVertexArray(lightCubeVAO);
@@ -213,16 +189,6 @@ int main()
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-    groundShader.use();
-    groundShader.setVec4("aFragColor", 1.0f, 0.5f, 0.31f, 1.0f);
-    glBindVertexArray(groundVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(5.0f)); 
-    groundShader.setMat4("model", model);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseMap);
@@ -255,7 +221,7 @@ int main()
     objectShader.setMat4("view", view);
 
     // world transformation
-    model = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
     objectShader.setMat4("model", model);
 
     // 在CPU中计算法线矩阵

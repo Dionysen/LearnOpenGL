@@ -6,6 +6,9 @@ GettingStarted/.cache/
 Lighting/.xmake/
 Lighting/build/
 Lighting/.cache/
+MyScene/.xmake/
+MyScene/build/
+MyScene/.cache/
 # MacOS Cache
 .DS_Store
 

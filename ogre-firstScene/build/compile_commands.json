@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/dionysen/Documents/LearnOpenGL/ogre-firstScene/build",
+  "command": "/usr/bin/c++  -isystem /usr/local/include/OGRE/Bites -isystem /usr/local/include/OGRE -isystem /usr/local/include/OGRE/Overlay -isystem /usr/local/include/OGRE/RTShaderSystem -std=gnu++11 -o CMakeFiles/0_Bootstrap.dir/Bootstrap.cpp.o -c /home/dionysen/Documents/LearnOpenGL/ogre-firstScene/Bootstrap.cpp",
+  "file": "/home/dionysen/Documents/LearnOpenGL/ogre-firstScene/Bootstrap.cpp",
+  "output": "CMakeFiles/0_Bootstrap.dir/Bootstrap.cpp.o"
+}
+]

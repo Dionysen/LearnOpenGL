@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/include/OGRE",
+                "/usr/local/include/OGRE/Bites",
+                "/usr/local/include/OGRE/RTShaderSystem"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "compilerPath": "/usr/bin/clang++",
+            "compileCommands": "build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
