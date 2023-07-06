@@ -1,0 +1,11 @@
+[
+{
+  "directory": "c:\\Users\\zhaoys-c\\Documents\\LearnOpenGL",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-Iinclude", "-IDependencies\\include\\glad", "-IDependencies\\include", "-Ishaders", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\opengl\\windows\\x64\\src\\WinMain.cpp.obj", "src\\WinMain.cpp"],
+  "file": "src\\WinMain.cpp"
+},
+{
+  "directory": "c:\\Users\\zhaoys-c\\Documents\\LearnOpenGL",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-Iinclude", "-IDependencies\\include\\glad", "-IDependencies\\include", "-Ishaders", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\opengl\\windows\\x64\\src\\glad.c.obj", "src\\glad.c"],
+  "file": "src\\glad.c"
+}]
