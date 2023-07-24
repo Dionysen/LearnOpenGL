@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assimp", "Assimp\Assimp.vcxproj", "{72FCA13F-6ED0-42D5-AF73-2AD8C87D7A3A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ogre_01", "ogre_01\ogre_01.vcxproj", "{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{72FCA13F-6ED0-42D5-AF73-2AD8C87D7A3A}.Release|x64.Build.0 = Release|x64
 		{72FCA13F-6ED0-42D5-AF73-2AD8C87D7A3A}.Release|x86.ActiveCfg = Release|Win32
 		{72FCA13F-6ED0-42D5-AF73-2AD8C87D7A3A}.Release|x86.Build.0 = Release|Win32
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Debug|x64.ActiveCfg = Debug|x64
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Debug|x64.Build.0 = Debug|x64
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Debug|x86.ActiveCfg = Debug|Win32
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Debug|x86.Build.0 = Debug|Win32
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Release|x64.ActiveCfg = Release|x64
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Release|x64.Build.0 = Release|x64
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Release|x86.ActiveCfg = Release|Win32
+		{D1C16A8C-FAE3-4C78-A69B-677556F61CDA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
