@@ -3,6 +3,11 @@ Win32OpenGL/.xmake/
 Win32OpenGL/build/
 MyScene/.xmake/
 MyScene/build/
+Assimp/.xmake/
+Assimp/build/
+Assimp/x64/
+Assimp/packages/
+Assimp/.vs/
 # MacOS Cache
 .DS_Store
 
