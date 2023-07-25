@@ -10,6 +10,10 @@ MyScene/.xmake/
 MyScene/build/
 MyScene/.cache/
 
+Assimp/.xmake/
+Assimp/build/
+Assimp/.cache/
+
 
 # MacOS Cache
 .DS_Store
