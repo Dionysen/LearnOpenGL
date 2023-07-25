@@ -436,9 +436,9 @@ CMakeFiles/0_Bootstrap.dir/Bootstrap.cpp.o: /home/dionysen/Documents/LearnOpenGL
   /usr/include/c++/13.1.1/chrono \
   /usr/local/include/OGRE/OgreComponents.h \
   /usr/local/include/OGRE/Bites/OgreApplicationContext.h \
+  /usr/local/include/OGRE/Bites/OgreApplicationContextBase.h \
   /usr/local/include/OGRE/Bites/OgreBitesPrerequisites.h \
   /usr/local/include/OGRE/OgreBuildSettings.h \
-  /usr/local/include/OGRE/Bites/OgreApplicationContextBase.h \
   /usr/local/include/OGRE/OgreComponents.h \
   /usr/local/include/OGRE/OgreLogManager.h \
   /usr/local/include/OGRE/OgrePlugin.h \

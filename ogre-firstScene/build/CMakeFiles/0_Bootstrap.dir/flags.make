@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -isystem /usr/local/include/OGRE/Bites -isystem /usr/local/include/OGRE -isystem /usr/local/include/OGRE/Overlay -isystem /usr/local/include/OGRE/RTShaderSystem
 
-CXX_FLAGS = -std=gnu++11
+CXX_FLAGS = -g -std=gnu++11
 

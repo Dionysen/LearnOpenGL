@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 11)
 find_package(OGRE REQUIRED COMPONENTS Bites CONFIG)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
+set(CMAKE_BUILD_TYPE debug)
 # add the source files as usual
 add_executable(0_Bootstrap Bootstrap.cpp)
 
