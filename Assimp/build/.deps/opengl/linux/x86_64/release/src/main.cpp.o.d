@@ -15,9 +15,9 @@
             "-DNDEBUG"
         }
     },
-    depfiles_gcc = "main.o: src/main.cpp Dependencies/glad/glad.h  Dependencies/glad/khrplatform.h include/camera.h include/model.h  include/../Dependencies/include/stb_image.h include/mesh.h  include/shader.h include/shader.h\
-",
     files = {
         "src/main.cpp"
-    }
+    },
+    depfiles_gcc = "main.o: src/main.cpp Dependencies/glad/glad.h  Dependencies/glad/khrplatform.h include/camera.h include/model.h  include/../Dependencies/include/stb_image.h include/mesh.h  include/shader.h include/shader.h\
+"
 }

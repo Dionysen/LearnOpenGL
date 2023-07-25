@@ -1,6 +1,4 @@
 {
-    depfiles_gcc = "glad.o: Dependencies/glad/glad.c Dependencies/glad/glad.h  Dependencies/glad/khrplatform.h\
-",
     values = {
         "/usr/bin/gcc",
         {
@@ -18,5 +16,7 @@
     },
     files = {
         "Dependencies/glad/glad.c"
-    }
+    },
+    depfiles_gcc = "glad.o: Dependencies/glad/glad.c Dependencies/glad/glad.h  Dependencies/glad/khrplatform.h\
+"
 }

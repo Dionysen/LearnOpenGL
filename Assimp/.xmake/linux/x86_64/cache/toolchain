@@ -1,32 +1,32 @@
 {
-    tool_target_opengl_linux_x86_64_cxx = {
+    tool_target_opengl_linux_x86_64_ld = {
+        program = "/usr/bin/g++",
         toolchain_info = {
-            arch = "x86_64",
-            plat = "linux",
             cachekey = "gcc_arch_x86_64_plat_linux",
-            name = "gcc"
+            name = "gcc",
+            plat = "linux",
+            arch = "x86_64"
         },
-        program = "/usr/bin/gcc",
-        toolname = "gcc"
+        toolname = "gxx"
     },
     tool_target_opengl_linux_x86_64_cc = {
-        toolchain_info = {
-            arch = "x86_64",
-            plat = "linux",
-            cachekey = "gcc_arch_x86_64_plat_linux",
-            name = "gcc"
-        },
         program = "/usr/bin/gcc",
+        toolchain_info = {
+            cachekey = "gcc_arch_x86_64_plat_linux",
+            name = "gcc",
+            plat = "linux",
+            arch = "x86_64"
+        },
         toolname = "gcc"
     },
-    tool_target_opengl_linux_x86_64_ld = {
-        toolname = "gxx",
+    tool_target_opengl_linux_x86_64_cxx = {
+        program = "/usr/bin/gcc",
         toolchain_info = {
-            arch = "x86_64",
-            plat = "linux",
             cachekey = "gcc_arch_x86_64_plat_linux",
-            name = "gcc"
+            name = "gcc",
+            plat = "linux",
+            arch = "x86_64"
         },
-        program = "/usr/bin/g++"
+        toolname = "gcc"
     }
 }
