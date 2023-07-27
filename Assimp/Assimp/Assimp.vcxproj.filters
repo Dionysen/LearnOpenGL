@@ -43,6 +43,12 @@
     <None Include="shaders\model.vs">
       <Filter>头文件\shaders</Filter>
     </None>
+    <None Include="shaders\skybox.fs">
+      <Filter>头文件\shaders</Filter>
+    </None>
+    <None Include="shaders\skybox.vs">
+      <Filter>头文件\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

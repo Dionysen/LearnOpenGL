@@ -163,10 +163,17 @@ private:
         // 3. normal maps
         std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        // 4. height maps
+        // 4. height maps 
         std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
+        //aiString reflectionTexturePath;
+        //if (material->GetTexture(aiTextureType_REFLECTION, 0, &reflectionTexturePath) == AI_SUCCESS)
+        //{
+        //    // 如果存在反射贴图，将其替换为漫反射贴图
+        //    material->AddProperty(&reflectionTexturePath, aiTextureType_AMBIENT, 0);
+        //}
+        
         // return a mesh object created from the extracted mesh data
         return Mesh(vertices, indices, textures);
     }

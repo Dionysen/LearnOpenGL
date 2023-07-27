@@ -1,14 +1,5 @@
 {
     cmdlines = {
-        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.2\assets\explorer.lua]],
-        "xmake check",
-        "xmake ",
-        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.2\assets\config.lua]],
-        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.2\assets\update_intellisense.lua .vscode]],
-        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.2\assets\explorer.lua]],
-        "xmake check",
-        "xmake ",
-        "xmake check",
         "xmake project -k compile_commands",
         [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.2\assets\explorer.lua]],
         "xmake check",
@@ -64,6 +55,15 @@
         [[xmake lua C:\Users\zhaoys-c\xmake\actions\build\statistics.lua]],
         [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\explorer.lua]],
         [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\config.lua]],
-        "xmake "
+        "xmake ",
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\explorer.lua]],
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\config.lua]],
+        "xmake ",
+        "xmake ",
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\explorer.lua]],
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.4\assets\config.lua]],
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.5\assets\explorer.lua]],
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.5\assets\config.lua]],
+        [[xmake l c:\Users\zhaoys-c\.vscode\extensions\tboox.xmake-vscode-2.1.5\assets\explorer.lua]]
     }
 }

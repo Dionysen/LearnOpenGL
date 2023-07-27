@@ -134,6 +134,8 @@
     <None Include="shaders\light.vs" />
     <None Include="shaders\model.fs" />
     <None Include="shaders\model.vs" />
+    <None Include="shaders\skybox.fs" />
+    <None Include="shaders\skybox.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glad\glad.c" />

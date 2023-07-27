@@ -3,12 +3,13 @@ project(OgreTutorialsSample)
 
 # required for Ogre 1.11+
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_PREFIX_PATH "D:/ogre/build/sdk")
+set(CMAKE_PREFIX_PATH "D:/Libs/ogre/build/sdk")
+find_package(OGRE REQUIRED COMPONENTS Bites CONFIG)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # # [discover_ogre]
 # The COMPONENTS part checks that OGRE was built the way we need it
 # The CONFIG flag makes sure we get OGRE instead of OGRE-next
-find_package(OGRE REQUIRED COMPONENTS Bites CONFIG)
 
 # add the source files as usual
 add_executable(0_Bootstrap Bootstrap.cpp)
