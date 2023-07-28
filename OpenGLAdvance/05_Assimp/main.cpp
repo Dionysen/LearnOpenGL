@@ -1,13 +1,13 @@
-#include "Dependencies/glad/glad.h"
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "include/shader.h"
-#include "include/camera.h"
-#include "include/model.h"
+#include "shader.h"
+#include "camera.h"
+#include "model.h"
 
 #include <iostream>
 
@@ -88,13 +88,13 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader modelShader("shaders/model.vs", "shaders/model.fs");
-    Shader objectShader("shaders/color.vs", "shaders/color.fs");
-    Shader lightShader("shaders/light.vs", "shaders/light.fs");
-    Shader skyboxShader("shaders/skybox.vs", "shaders/skybox.fs");
+    Shader modelShader("../shaders/model.vs", "../shaders/model.fs");
+    Shader objectShader("../shaders/color.vs", "../shaders/color.fs");
+    Shader lightShader("../shaders/light.vs", "../shaders/light.fs");
+    Shader skyboxShader("../shaders/skybox.vs", "../shaders/skybox.fs");
     // load models
     // -----------
-    Model ourModel("assets/nanosuit/nanosuit.obj");
+    Model ourModel("../assets/nanosuit/nanosuit.obj");
 
     float skyboxVertices[] = {
         // positions          
@@ -241,20 +241,20 @@ int main()
 
     vector<std::string> faces
     {
-        "assets/skybox/right.jpg",
-        "assets/skybox/left.jpg",
-        "assets/skybox/top.jpg",
-        "assets/skybox/bottom.jpg",
-        "assets/skybox/front.jpg",
-        "assets/skybox/back.jpg",
+        "../assets/skybox/right.jpg",
+        "../assets/skybox/left.jpg",
+        "../assets/skybox/top.jpg",
+        "../assets/skybox/bottom.jpg",
+        "../assets/skybox/front.jpg",
+        "../assets/skybox/back.jpg",
     };
     unsigned int cubemapTexture = loadCubemap(faces);
 
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
-    unsigned int diffuseMap = loadTexture("assets/container2.png");
-    unsigned int specularMap = loadTexture("assets/container2_specular.png");
+    unsigned int diffuseMap = loadTexture("../assets/container2.png");
+    unsigned int specularMap = loadTexture("../assets/container2_specular.png");
     objectShader.use();
     objectShader.setInt("material.diffuse", 0);
     objectShader.setInt("material.specular", 1);
