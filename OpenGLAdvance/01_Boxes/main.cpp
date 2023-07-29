@@ -155,7 +155,7 @@ int main()
 
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+   
   glBindVertexArray(cubeVAO);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
@@ -409,7 +409,7 @@ unsigned int loadTexture(char const* path)
   unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
   if (data)
   {
-    GLenum format;
+      GLenum format = {};
     if (nrComponents == 1)
       format = GL_RED;
     else if (nrComponents == 3)
