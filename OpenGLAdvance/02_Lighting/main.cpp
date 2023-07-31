@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Windows.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -20,9 +21,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 unsigned int loadTexture(char const* path);
 
-// settings
+// settingsx`
 const unsigned int SCR_WIDTH = 1100;
 const unsigned int SCR_HEIGHT = 800;
 
@@ -40,6 +43,9 @@ float lastFrame = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+// Cursor
+bool show_mouse = false;
+
 int main()
 {
   // glfw: initialize and configure
@@ -48,6 +54,10 @@ int main()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+  // enable multisample
+  glfwWindowHint(GLFW_SAMPLES,4);
+
 
 #ifdef __APPLE__
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -62,13 +72,18 @@ int main()
     glfwTerminate();
     return -1;
   }
+
+  //glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, SCR_WIDTH, SCR_HEIGHT, GLFW_DONT_CARE); // Setting fullscreen
+
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetScrollCallback(window, scroll_callback);
+  glfwSetKeyCallback(window, key_callback);
 
-  // 捕捉鼠标，并隐藏光标
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+   // 捕捉鼠标，并隐藏光标
+   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 
   // glad: load all OpenGL function pointers
   // ---------------------------------------
@@ -78,56 +93,58 @@ int main()
     return -1;
   }
 
-  // configure global opengl state
+  // configure global opengl state, this should behind creating a window
   // -----------------------------
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_MULTISAMPLE);
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader objectShader("../shaders/circle.vs", "../shaders/circle.fs");
+  Shader objectShader("../shaders/cube.vs", "../shaders/cube.fs");
   Shader lightShader("../shaders/basic_lighting.vs", "../shaders/basic_lighting.fs");
   float vertices[] = {
-       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-       -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+      // positions          // normals           // texture coords
+      -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+       0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+       0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+       0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+      -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
 
-       -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-       -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-       -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+       0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+       0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+       0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+      -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
 
-       -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-       -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-       -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-       -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-       -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-       -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+      -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+      -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+      -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+      -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+      -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+      -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+       0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+       0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+       0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+       0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+       0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+       0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-       -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-       -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-       -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+       0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+       0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+       0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+      -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+      -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
 
-       -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-       -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-       -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+      -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+       0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+       0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+       0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+      -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+      -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
   };
 
   unsigned int VBO, circleVAO;
@@ -140,12 +157,14 @@ int main()
   glBindVertexArray(circleVAO);
 
   // position attribute
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
   // normal attribute
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
-
+  // texture attribute
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
 
   // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
   unsigned int lightCubeVAO;
@@ -154,7 +173,7 @@ int main()
 
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
 
@@ -162,7 +181,8 @@ int main()
   unsigned int diffuseMap = loadTexture("../assets/container2.png");
   unsigned int specularMap = loadTexture("../assets/container2_specular.png");
   objectShader.use();
-
+  objectShader.setInt("material.diffuse", 0);
+  objectShader.setInt("material.specular", 1);
 
   // Init Dear Imgui
   const char* glsl_version = "#version 330";
@@ -173,14 +193,18 @@ int main()
 
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
-  ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+  // imgui variable
+  glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
+  float ambientStrength = 0.1f;
+  float specularStrength = 0.5f;
+  float theta = 0.1f;
+
+  bool show_demo_window = false;
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window))
   {
-
-
     // per-frame time logic
     // --------------------
     float currentFrame = static_cast<float>(glfwGetTime());
@@ -192,17 +216,25 @@ int main()
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseMap);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, specularMap);
+
     
-    // Circle
+    // light pos
+    lightPos.x = 1.0f + sin(theta) * 2.0f;
+    lightPos.y = sin(theta / 2.0f) * 1.0f;
+      
+    // object
     objectShader.use();
-    objectShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-    objectShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-    objectShader.setVec3("lightPos", lightPos);
+    objectShader.setVec3("light.direction", lightPos);
     objectShader.setVec3("viewPos", camera.Position);
+
+    objectShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+    objectShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+    objectShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+    objectShader.setFloat("material.shininess", 32.0f);
+  
+    //objectShader.setFloat("ambientStrength", ambientStrength);
+    //objectShader.setFloat("specularStrength", specularStrength);
 
     // view/projection transformations, 所有物体的视角和透视都是一样的，因此做一次变换即可
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -218,6 +250,12 @@ int main()
     glm::mat3 normalMatrix = glm::mat3(1.0f);
     normalMatrix = glm::mat3(transpose(inverse(model)));
     objectShader.setMat3("normalMatrix", normalMatrix);
+
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, diffuseMap);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, specularMap);
 
     // render the circle
     glBindVertexArray(circleVAO);
@@ -242,11 +280,28 @@ int main()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     {
-        // bool show_demo_window = true;
-        // ImGui::ShowDemoWindow(&show_demo_window);
-        ImGui::Begin("Lighting Setting");
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
+        // 1. Show the big demo window// (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+        if (show_demo_window)
+            ImGui::ShowDemoWindow(&show_demo_window);
+
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+        {
+            ImGui::Begin("Cube and Lighting");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::Text("Here can be adjust some params of the sence.");  // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+
+            ImGui::SliderFloat("ambientStrength", &ambientStrength, 0.0f, 1.0f);   // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("specularStrength", &specularStrength, 0.0f, 1.0f);
+
+            ImGui::ColorEdit3("Cube color", (float*)&objectColor); // Edit 3 floats representing a color
+            ImGui::Text("Cube color = %f, %f, %f", objectColor.x, objectColor.y, objectColor.z); 
+
+            ImGui::SliderFloat("Theta", &theta, 0.0f, 15.0f);
+
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::End();
+        }
     }
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -302,6 +357,7 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         camera.ProcessKeyboard(FASTER_RIGHT, deltaTime);
 
+  
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -317,30 +373,34 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
-  float xpos = static_cast<float>(xposIn);
-  float ypos = static_cast<float>(yposIn);
+    if (!show_mouse) {
+        float xpos = static_cast<float>(xposIn);
+        float ypos = static_cast<float>(yposIn);
 
-  if (firstMouse)
-  {
-    lastX = xpos;
-    lastY = ypos;
-    firstMouse = false;
-  }
+        if (firstMouse)
+        {
+            lastX = xpos;
+            lastY = ypos;
+            firstMouse = false;
+        }
 
-  float xoffset = xpos - lastX;
-  float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-  lastX = xpos;
-  lastY = ypos;
+        lastX = xpos;
+        lastY = ypos;
 
-  camera.ProcessMouseMovement(xoffset, yoffset);
+        camera.ProcessMouseMovement(xoffset, yoffset);
+    }
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-  camera.ProcessMouseScroll(static_cast<float>(yoffset));
+    if (!show_mouse) {
+        camera.ProcessMouseScroll(static_cast<float>(yoffset));
+    }
 }
 
 // utility function for loading a 2D texture from file
@@ -380,4 +440,24 @@ unsigned int loadTexture(char const* path)
   }
 
   return textureID;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+{
+    if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+    {
+        if (show_mouse)
+        {
+            show_mouse = false;
+        }
+        else
+        {
+            show_mouse = true;
+        }
+        // 捕捉鼠标，并隐藏光标 
+        if (!show_mouse)
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        else
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
 }

@@ -49,9 +49,9 @@ in vec3 Normal;
 in vec2 TexCoords;
 
 uniform vec3 viewPos;
-uniform DirLight dirLight;
-uniform PointLight pointLights[NR_POINT_LIGHTS];
-uniform SpotLight spotLight;
+uniform DirLight dirLight; // 定向光，模拟太阳光，无衰减
+uniform PointLight pointLights[NR_POINT_LIGHTS]; // 点光源，模拟灯泡，有衰减
+uniform SpotLight spotLight; // 手电筒，模拟探照灯，有衰减
 uniform Material material;
 
 // function prototypes
@@ -107,9 +107,9 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    // attenuation
+    // attenuation/衰减
     float distance = length(light.position - fragPos);
-    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));// 衰减公式
     // combine results
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));

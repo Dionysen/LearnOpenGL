@@ -13,11 +13,11 @@ using namespace std;
 #define MAX_BONE_INFLUENCE 4
 
 struct Vertex {
-    // λ������
+    // 顶点位置
     glm::vec3 Position;
-    // ������
+    // 法向量
     glm::vec3 Normal;
-    // ��������
+    // 纹理向量
     glm::vec2 TexCoords;
     // tangent
     glm::vec3 Tangent;
@@ -29,7 +29,7 @@ struct Vertex {
     float m_Weights[MAX_BONE_INFLUENCE];
 };
 
-// �洢����id �������� ��������ͼ��λ��
+// 纹理结构体，储存纹理id，种类，和路径
 struct Texture {
     unsigned int id;
     string type;
@@ -38,13 +38,13 @@ struct Texture {
 
 class Mesh {
   public:
-    // ��������
+    // 网格数据
     vector<Vertex> vertices;
     vector<unsigned int> indices;
     vector<Texture> textures;
     unsigned int VAO;
 
-    // ���캯��
+    // 构造函数
     Mesh(vector<Vertex> vertices, vector<unsigned int> indices,
          vector<Texture> textures) {
         this->vertices = vertices;
@@ -56,7 +56,8 @@ class Mesh {
         setupMesh();
     }
 
-    // ��Ⱦ����
+    // 函数
+    // 绘制网格：传入一个着色器，
     void Draw(Shader &shader) {
         // bind appropriate textures
         unsigned int diffuseNr = 1;
@@ -100,18 +101,18 @@ class Mesh {
     }
 
   private:
-    // ��Ⱦ����
+    // 创建数据对象
     unsigned int VBO, EBO;
 
-    // ��ʼ�����еĻ������
+    // 设置网格：在这里读取顶点数据，放到缓冲区
     void setupMesh() {
-        // �����������
+        // 绑定数组对象
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
 
         glBindVertexArray(VAO);
-        // �������ݵ����㻺����
+
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         // A great thing about structs is that their memory layout is sequential
         // for all its items. The effect is that we can simply pass a pointer to
