@@ -67,7 +67,7 @@ int main()
         return -1;
     }
 
-    glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 1920, 1080, GLFW_DONT_CARE);
+    //glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 1920, 1080, GLFW_DONT_CARE);
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -103,7 +103,7 @@ int main()
     // load models
     // -----------
     Model ourModel("../assets/nanosuit/nanosuit.obj");
-    Model planet("../assets/planet/planet.obj");
+    //Model planet("../assets/planet/planet.obj");
 
     float skyboxVertices[] = {
         // positions          
@@ -206,13 +206,15 @@ int main()
         glm::vec3(1.3f, -2.0f, -2.5f),
         glm::vec3(1.5f, 2.0f, -2.5f),
         glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f) };
+        glm::vec3(-1.3f, 1.0f, -1.5f) 
+    };
 
     glm::vec3 pointLightPositions[] = {
         glm::vec3(0.7f, 0.2f, 2.0f),
         glm::vec3(2.3f, -3.3f, -4.0f),
         glm::vec3(-4.0f, 2.0f, -12.0f),
-        glm::vec3(0.0f, 0.0f, -3.0f) };
+        glm::vec3(0.0f, 0.0f, -3.0f) 
+    };
 
 
     unsigned int VBO, cubeVAO;
@@ -257,6 +259,7 @@ int main()
         "../assets/space/front.jpg",
         "../assets/space/back.jpg",
     };
+
     unsigned int cubemapTexture = loadCubemap(faces);
 
     skyboxShader.use();
@@ -356,6 +359,7 @@ int main()
         objectShader.setFloat("spotLight.quadratic", 0.032f);
         objectShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
         objectShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
         // view/projection transformations，所有物体的视角和透视都是一样的，因此做一次变换即可
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
@@ -402,7 +406,7 @@ int main()
         model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
         objectShader.setMat4("model", model);
         //ourModel.Draw(objectShader);
-        planet.Draw(objectShader);
+        ourModel.Draw(objectShader);
 
         // 灯
         lightShader.use(); // 激活着色器
@@ -430,6 +434,7 @@ int main()
         view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
         skyboxShader.setMat4("view", view);
         skyboxShader.setMat4("projection", projection);
+        
         // skybox cube
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
@@ -439,6 +444,7 @@ int main()
         glDepthFunc(GL_LESS); // set depth function back to default
 
         static bool show_demo_window = false;
+        
         // Dear ImGui
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -461,7 +467,6 @@ int main()
         }
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -563,7 +568,7 @@ unsigned int loadTexture(char const* path)
     unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
     if (data)
     {
-        GLenum format;
+        GLenum format{};
         if (nrComponents == 1)
             format = GL_RED;
         else if (nrComponents == 3)
