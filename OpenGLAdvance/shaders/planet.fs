@@ -3,13 +3,13 @@ out vec4 FragColor;
 
 struct Material {  // 材质结构体
     sampler2D diffuse;
-    sampler2D specular;
+    // sampler2D specular;
     float shininess;
 };
 
 struct DirLight { // 定向光
     vec3 direction;
-    
+	
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -35,10 +35,10 @@ void main()
     // specular shading
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    // combine results
+    //  combine results
     vec3 ambient = dirLight.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = dirLight.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
-    vec3 specular = dirLight.specular * spec * vec3(texture(material.specular, TexCoords));
+    vec3 specular = dirLight.specular * spec * vec3(texture(material.diffuse, TexCoords));
 
     vec3 result = ambient + diffuse + specular;
     FragColor = vec4(result, 1.0);

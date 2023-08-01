@@ -1,13 +1,13 @@
 #version 330 core
 out vec4 FragColor;
 
-struct Material {
+struct Material {  // 材质结构体
     sampler2D diffuse;
     sampler2D specular;
     float shininess;
-}; 
+};
 
-struct DirLight {
+struct DirLight { // 定向光
     vec3 direction;
 	
     vec3 ambient;
@@ -15,7 +15,7 @@ struct DirLight {
     vec3 specular;
 };
 
-struct PointLight {
+struct PointLight { //点光源
     vec3 position;
     
     float constant;
@@ -27,7 +27,7 @@ struct PointLight {
     vec3 specular;
 };
 
-struct SpotLight {
+struct SpotLight {  //聚光灯
     vec3 position;
     vec3 direction;
     float cutOff;
@@ -71,6 +71,7 @@ void main()
     // per lamp. In the main() function we take all the calculated colors and sum them up for
     // this fragment's final color.
     // == =====================================================
+    
     // phase 1: directional lighting
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point lights

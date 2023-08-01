@@ -100,8 +100,9 @@ int main()
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader objectShader("../shaders/cube.vs", "../shaders/cube.fs");
-  Shader lightShader("../shaders/basic_lighting.vs", "../shaders/basic_lighting.fs");
+  Shader objectShader("../shaders/normallight_material.vs", "../shaders/normallight_material.fs");
+  Shader lightShader("../shaders/light.vs", "../shaders/light.fs");
+
   float vertices[] = {
       // positions          // normals           // texture coords
       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
@@ -180,6 +181,7 @@ int main()
   // unsigned int texture1 = loadTexture("assets/container2.png");
   unsigned int diffuseMap = loadTexture("../assets/container2.png");
   unsigned int specularMap = loadTexture("../assets/container2_specular.png");
+
   objectShader.use();
   objectShader.setInt("material.diffuse", 0);
   objectShader.setInt("material.specular", 1);
@@ -216,12 +218,15 @@ int main()
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, diffuseMap);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, specularMap);
 
-    
     // light pos
     lightPos.x = 1.0f + sin(theta) * 2.0f;
     lightPos.y = sin(theta / 2.0f) * 1.0f;
-      
+
     // object
     objectShader.use();
     objectShader.setVec3("light.direction", lightPos);
@@ -252,15 +257,9 @@ int main()
     objectShader.setMat3("normalMatrix", normalMatrix);
 
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseMap);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, specularMap);
-
     // render the circle
     glBindVertexArray(circleVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
     // also draw the lamp object
     lightShader.use();
@@ -273,7 +272,6 @@ int main()
 
     glBindVertexArray(lightCubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
     // Dear ImGui
     ImGui_ImplOpenGL3_NewFrame();

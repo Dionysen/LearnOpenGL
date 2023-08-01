@@ -29,7 +29,6 @@ uniform Light light;
 uniform float ambientStrength = 0.1;
 uniform float specularStrength = 0.5;
 
-
 void main()
 {
     // 环境光
@@ -37,7 +36,7 @@ void main()
     
     // 漫反射 
     vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(- light.direction);
+    vec3 lightDir = normalize(light.direction);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = light.diffuse * diff * texture(material.diffuse, TexCoords).rgb;
         

@@ -67,8 +67,7 @@ int main()
         return -1;
     }
 
-    //glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 1920, 1080, GLFW_DONT_CARE);
-
+    glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 1920, 1080, GLFW_DONT_CARE);
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -98,13 +97,13 @@ int main()
 
     // build and compile shaders 
     // -------------------------
-    Shader modelShader("../shaders/model.vs", "../shaders/model.fs");
-    Shader objectShader("../shaders/color.vs", "../shaders/color.fs");
+    Shader objectShader("../shaders/dir_point_spot.vs", "../shaders/dir_point_spot.fs");
     Shader lightShader("../shaders/light.vs", "../shaders/light.fs");
     Shader skyboxShader("../shaders/skybox.vs", "../shaders/skybox.fs");
     // load models
     // -----------
     Model ourModel("../assets/nanosuit/nanosuit.obj");
+    Model planet("../assets/planet/planet.obj");
 
     float skyboxVertices[] = {
         // positions          
@@ -251,12 +250,12 @@ int main()
 
     vector<std::string> faces
     {
-        "../assets/skybox/right.jpg",
-        "../assets/skybox/left.jpg",
-        "../assets/skybox/top.jpg",
-        "../assets/skybox/bottom.jpg",
-        "../assets/skybox/front.jpg",
-        "../assets/skybox/back.jpg",
+        "../assets/space/right.jpg",
+        "../assets/space/left.jpg",
+        "../assets/space/top.jpg",
+        "../assets/space/bottom.jpg",
+        "../assets/space/front.jpg",
+        "../assets/space/back.jpg",
     };
     unsigned int cubemapTexture = loadCubemap(faces);
 
@@ -265,6 +264,7 @@ int main()
 
     unsigned int diffuseMap = loadTexture("../assets/container2.png");
     unsigned int specularMap = loadTexture("../assets/container2_specular.png");
+    
     objectShader.use();
     objectShader.setInt("material.diffuse", 0);
     objectShader.setInt("material.specular", 1);
@@ -392,14 +392,17 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        modelShader.use();
-        modelShader.setMat4("projection", projection);
-        modelShader.setMat4("view", view);
+        //modelShader.use();
+        //modelShader.setVec3("lightPos", lightPos);
+        //modelShader.setVec3("viewPos", camera.Position);
+        //modelShader.setMat4("projection", projection);
+        //modelShader.setMat4("view", view);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
-        modelShader.setMat4("model", model);
-        ourModel.Draw(modelShader);
+        objectShader.setMat4("model", model);
+        //ourModel.Draw(objectShader);
+        planet.Draw(objectShader);
 
         // µÆ
         lightShader.use(); // ¼¤»î×ÅÉ«Æ÷
@@ -435,6 +438,31 @@ int main()
         glBindVertexArray(0);
         glDepthFunc(GL_LESS); // set depth function back to default
 
+        static bool show_demo_window = false;
+        // Dear ImGui
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        {
+            // 1. Show the big demo window// (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+            if (show_demo_window)
+                ImGui::ShowDemoWindow(&show_demo_window);
+
+            // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+            {
+                ImGui::Begin("Cube and Lighting");                          // Create a window called "Hello, world!" and append into it.
+
+                ImGui::Text("Here can be adjust some params of the sence.");  // Display some text (you can use a format strings too)
+                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+
+                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+                ImGui::End();
+            }
+        }
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -468,6 +496,16 @@ void processInput(GLFWwindow* window)
             camera.ProcessKeyboard(UP, deltaTime);
         if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
             camera.ProcessKeyboard(DOWN, deltaTime);
+
+        // Faster
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            camera.ProcessKeyboard(FASTER_FORWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            camera.ProcessKeyboard(FASTER_BACKWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            camera.ProcessKeyboard(FASTER_LEFT, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            camera.ProcessKeyboard(FASTER_RIGHT, deltaTime);
     }
 }
 

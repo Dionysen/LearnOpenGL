@@ -80,7 +80,7 @@ int main()
 
   // build and compile our shader zprogram
   // ------------------------------------
-  Shader objectShader("../shaders/color.vs", "../shaders/color.fs");
+  Shader objectShader("../shaders/dir_point_spot.vs", "../shaders/dir_point_spot.fs");
   Shader lightShader("../shaders/light.vs", "../shaders/light.fs");
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -172,9 +172,9 @@ int main()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
-  // unsigned int texture1 = loadTexture("assets/container2.png");
   unsigned int diffuseMap = loadTexture("../assets/container2.png");
   unsigned int specularMap = loadTexture("../assets/container2_specular.png");
+
   objectShader.use();
   objectShader.setInt("material.diffuse", 0);
   objectShader.setInt("material.specular", 1);
@@ -402,37 +402,37 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 // ---------------------------------------------------
 unsigned int loadTexture(char const* path)
 {
-  unsigned int textureID;
-  glGenTextures(1, &textureID);
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
 
-  int width, height, nrComponents;
-  unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
-  if (data)
-  {
-      GLenum format = {};
-    if (nrComponents == 1)
-      format = GL_RED;
-    else if (nrComponents == 3)
-      format = GL_RGB;
-    else if (nrComponents == 4)
-      format = GL_RGBA;
+    int width, height, nrComponents;
+    unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
+    if (data)
+    {
+        GLenum format = {};
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
 
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    stbi_image_free(data);
-  }
-  else
-  {
-    std::cout << "Texture failed to load at path: " << path << std::endl;
-    stbi_image_free(data);
-  }
+        stbi_image_free(data);
+    }
+    else
+    {
+        std::cout << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
+    }
 
   return textureID;
 }

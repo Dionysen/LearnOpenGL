@@ -183,7 +183,6 @@ class Model {
         // if (material->GetTexture(aiTextureType_REFLECTION, 0,
         // &reflectionTexturePath) == AI_SUCCESS)
         //{
-        //     // ������ڷ�����ͼ�������滻Ϊ��������ͼ
         //     material->AddProperty(&reflectionTexturePath,
         //     aiTextureType_AMBIENT, 0);
         // }
