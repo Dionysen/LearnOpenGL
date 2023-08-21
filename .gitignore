@@ -16,6 +16,10 @@ Assimp/.xmake/
 Assimp/build/
 Assimp/.cache/
 
+Template/build/
+Template/.xmake/
+Template/.vscode/
+Template/.cache/
 
 # MacOS Cache
 .DS_Store
