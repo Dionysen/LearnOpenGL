@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-01_Boxes",
+      "appliesTo": "OpenGLAdvance/01_Boxes/",
+      "type": "launch"
+    }
+  ]
+}

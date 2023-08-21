@@ -25,8 +25,8 @@ unsigned int loadTexture(char const* path);
 unsigned int loadCubemap(vector<std::string> faces);
 
 // settings
-const unsigned int SCR_WIDTH = 1920;
-const unsigned int SCR_HEIGHT = 1080;
+const unsigned int SCR_WIDTH = 1100;
+const unsigned int SCR_HEIGHT = 800;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -91,9 +91,9 @@ int main()
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_ALWAYS);
+    //glDepthFunc(GL_ALWAYS);
 
-    glEnable(GL_STENCIL_TEST);
+    //glEnable(GL_STENCIL_TEST);
 
     // build and compile shaders 
     // -------------------------
@@ -298,7 +298,7 @@ int main()
         // render
         // ------
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseMap);
@@ -396,6 +396,7 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+        // model
         //modelShader.use();
         //modelShader.setVec3("lightPos", lightPos);
         //modelShader.setVec3("viewPos", camera.Position);
@@ -405,7 +406,6 @@ int main()
         model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
         objectShader.setMat4("model", model);
-        //ourModel.Draw(objectShader);
         ourModel.Draw(objectShader);
 
         // µÆ
@@ -456,7 +456,7 @@ int main()
 
             // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
             {
-                ImGui::Begin("Cube and Lighting");                          // Create a window called "Hello, world!" and append into it.
+                ImGui::Begin("Cube and Lighting");   // Create a window called "Hello, world!" and append into it.
 
                 ImGui::Text("Here can be adjust some params of the sence.");  // Display some text (you can use a format strings too)
                 ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
@@ -635,6 +635,7 @@ unsigned int loadCubemap(vector<std::string> faces)
 
     return textureID;
 }
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)

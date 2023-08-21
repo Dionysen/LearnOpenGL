@@ -72,19 +72,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies\imgui\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
     <SourcePath>D:\LearnOpenGL\OpenGLAdvance\Dependencies\glad;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies\imgui\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
     <SourcePath>D:\LearnOpenGL\OpenGLAdvance\Dependencies\glad;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies\imgui\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
     <SourcePath>D:\LearnOpenGL\OpenGLAdvance\Dependencies\glad;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>D:\LearnOpenGL\OpenGLAdvance\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies\imgui\include;D:\LearnOpenGL\OpenGLAdvance\Dependencies;$(IncludePath)</IncludePath>
     <SourcePath>D:\LearnOpenGL\OpenGLAdvance\Dependencies\glad;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -145,6 +145,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\glad.c" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
