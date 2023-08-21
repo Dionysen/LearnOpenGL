@@ -325,7 +325,7 @@ int main() {
         objectShader.setFloat("spotLight.outerCutOff",
                               glm::cos(glm::radians(15.0f)));
         // view/projection
-        // transformations������������ӽǺ�͸�Ӷ���һ���ģ������һ�α任����
+        // transformations
         glm::mat4 projection = glm::perspective(
             glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT,
             0.1f, 100.0f);
@@ -333,21 +333,13 @@ int main() {
         objectShader.setMat4("projection", projection);
         objectShader.setMat4("view", view);
 
-        // render the loaded model����������ת��
+        // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(
-            model,
-            glm::vec3(
-                0.0f, 0.0f,
-                0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(
-            model,
-            glm::vec3(
-                1.0f, 1.0f,
-                1.0f)); // it's a bit too big for our scene, so scale it down
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
         objectShader.setMat4("model", model);
 
-        // ��CPU�м��㷨�߾���
+        // cal normal matrix
         glm::mat3 normalMatrix = glm::mat3(1.0f);
         normalMatrix = glm::mat3(transpose(inverse(model)));
         objectShader.setMat3("normalMatrix", normalMatrix);
@@ -359,43 +351,34 @@ int main() {
             // calculate the model matrix for each object and pass it to shader
             // before drawing
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(
-                model, cubePositions[i]); // ����cubeλ������λ�ñ任�����Ըı�λ��
+            model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             if (i % 2 != 0) {
                 angle = glfwGetTime() * 25.0f;
             }
-            model = glm::rotate(
-                model, glm::radians(angle),
-                glm::vec3(1.0f, 0.3f, 0.5f)); // ����angle����λ�ñ任��������ת����
+            model = glm::rotate(model, glm::radians(angle),
+                                glm::vec3(1.0f, 0.3f, 0.5f));
             objectShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        modelShader.use();
-        modelShader.setMat4("projection", projection);
-        modelShader.setMat4("view", view);
-        model = glm::translate(
-            model,
-            glm::vec3(
-                0.0f, 0.0f,
-                0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(
-            model,
-            glm::vec3(
-                0.2f, 0.2f,
-                0.2f)); // it's a bit too big for our scene, so scale it down
-        modelShader.setMat4("model", model);
-        ourModel.Draw(modelShader);
+        objectShader.use();
+        objectShader.setMat4("projection", projection);
+        objectShader.setMat4("view", view);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+        objectShader.setMat4("model", model);
 
-        // ��
-        lightShader.use(); // ������ɫ��
+        ourModel.Draw(objectShader);
+
+        // draw light
+        lightShader.use();
         lightShader.setMat4("projection", projection);
         lightShader.setMat4("view", view);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPos); // ���Ʒŵ���Դλ��
-        model = glm::scale(model, glm::vec3(0.2f)); // ��С
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f));
         lightShader.setMat4("model", model);
 
         glBindVertexArray(lightCubeVAO);
