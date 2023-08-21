@@ -1,0 +1,11 @@
+[
+{
+  "directory": "/data/data/com.termux/files/home/Documents/LearnOpenGL/MyScene",
+  "arguments": ["gcc", "-c", "-Qunused-arguments", "-g", "-O0", "-Iinclude", "-IDependencies/include/glad", "-IDependencies/include", "-Ishaders", "-I", "/data/data/com.termux/files/home/.xmake/packages/g/glm/0.9.9+8/91c17eaca3b94e6a8ba3501e6ca0acfc/include", "-o", "build/.objs/opengl/linux/arm64-v8a/debug/src/glad.c.o", "src/glad.c"],
+  "file": "src/glad.c"
+},
+{
+  "directory": "/data/data/com.termux/files/home/Documents/LearnOpenGL/MyScene",
+  "arguments": ["gcc", "-c", "-Qunused-arguments", "-g", "-O0", "-Iinclude", "-IDependencies/include/glad", "-IDependencies/include", "-Ishaders", "-I", "/data/data/com.termux/files/home/.xmake/packages/g/glm/0.9.9+8/91c17eaca3b94e6a8ba3501e6ca0acfc/include", "-o", "build/.objs/opengl/linux/arm64-v8a/debug/src/main.cpp.o", "src/main.cpp"],
+  "file": "src/main.cpp"
+}]

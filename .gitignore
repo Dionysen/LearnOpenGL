@@ -10,6 +10,8 @@ MyScene/.xmake/
 MyScene/build/
 MyScene/.cache/
 
+.xmake/
+
 Assimp/.xmake/
 Assimp/build/
 Assimp/.cache/
