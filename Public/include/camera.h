@@ -3,7 +3,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "glad.h"
+// #include "glad.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,7 +11,18 @@
 #include <vector>
 
 // 定义一些可能用到的常量
-enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN, FASTER_FORWARD, FASTER_BACKWARD, FASTER_LEFT, FASTER_RIGHT };
+enum Camera_Movement {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    FASTER_FORWARD,
+    FASTER_BACKWARD,
+    FASTER_LEFT,
+    FASTER_RIGHT
+};
 
 // 摄像机默认值
 const float YAW = -90.0f; // 偏航角度
@@ -124,7 +135,7 @@ class Camera {
         if (direction == DOWN)
             Position.y -= velocity;
         // Position.y = 0.0f; // 确保不会偏离xz平面
-    
+
         if (direction == FASTER_FORWARD)
             Position += Front * (velocity * 10);
         if (direction == FASTER_BACKWARD)
@@ -133,7 +144,6 @@ class Camera {
             Position -= Right * (velocity * 10);
         if (direction == FASTER_RIGHT)
             Position += Right * (velocity * 10);
-    
     }
 
     // processes input received from a mouse input system. Expects the offset

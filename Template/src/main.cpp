@@ -99,7 +99,7 @@ int main() {
 
     // build and compile shaders
     // -------------------------
-    Shader modelShader("shaders/model.vs", "shaders/model.fs");
+    // Shader modelShader("shaders/model.vs", "shaders/model.fs");
     Shader objectShader("shaders/color.vs", "shaders/color.fs");
     Shader lightShader("shaders/light.vs", "shaders/light.fs");
     Shader skyboxShader("shaders/skybox.vs", "shaders/skybox.fs");
