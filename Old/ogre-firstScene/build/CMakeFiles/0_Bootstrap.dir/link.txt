@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/0_Bootstrap.dir/Bootstrap.cpp.o -o 0_Bootstrap  -Wl,-rpath,/usr/local/lib /usr/local/lib/libOgreBites.so.14.0 /usr/local/lib/libOgreOverlay.so.14.0 /usr/local/lib/libOgreRTShaderSystem.so.14.0 /usr/local/lib/libOgreMain.so.14.0 -lpthread 
