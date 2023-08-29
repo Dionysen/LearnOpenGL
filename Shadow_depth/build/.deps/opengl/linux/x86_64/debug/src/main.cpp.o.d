@@ -1,9 +1,4 @@
 {
-    files = {
-        "src/main.cpp"
-    },
-    depfiles_gcc = "main.o: src/main.cpp ../Public/Dependencies/glad/include/glad.h  ../Public/Dependencies/glad/include/khrplatform.h  ../Public/include/camera.h ../Public/include/model.h  ../Public/Dependencies/stb_image/include/stb_image.h  ../Public/include/mesh.h ../Public/include/shader.h  ../Public/include/shader.h ../Public/Dependencies/imgui/include/imgui.h  ../Public/Dependencies/imgui/include/imconfig.h  ../Public/Dependencies/imgui/include/imgui_impl_glfw.h  ../Public/Dependencies/imgui/include/imgui_impl_opengl3.h\
-",
     values = {
         "/usr/bin/gcc",
         {
@@ -21,5 +16,10 @@
             "-isystem",
             "/usr/include/minizip"
         }
-    }
+    },
+    files = {
+        "src/main.cpp"
+    },
+    depfiles_gcc = "main.o: src/main.cpp ../Public/Dependencies/glad/include/glad.h  ../Public/Dependencies/glad/include/khrplatform.h  ../Public/include/camera.h ../Public/include/model.h  ../Public/Dependencies/stb_image/include/stb_image.h  ../Public/include/mesh.h ../Public/include/shader.h  ../Public/include/shader.h ../Public/Dependencies/imgui/include/imgui.h  ../Public/Dependencies/imgui/include/imconfig.h  ../Public/Dependencies/imgui/include/imgui_impl_glfw.h  ../Public/Dependencies/imgui/include/imgui_impl_opengl3.h\
+"
 }

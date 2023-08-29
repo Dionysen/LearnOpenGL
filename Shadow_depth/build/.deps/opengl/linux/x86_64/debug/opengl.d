@@ -1,15 +1,4 @@
 {
-    files = {
-        "build/.objs/opengl/linux/x86_64/debug/src/main.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_widgets.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_impl_glfw.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_draw.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_impl_opengl3.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_demo.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_tables.cpp.o",
-        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/glad/src/glad.c.o"
-    },
     values = {
         "/usr/bin/g++",
         {
@@ -59,5 +48,16 @@
             "-lminizip",
             "-lz"
         }
+    },
+    files = {
+        "build/.objs/opengl/linux/x86_64/debug/src/main.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_widgets.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_impl_glfw.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_draw.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_impl_opengl3.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_demo.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/imgui/src/imgui_tables.cpp.o",
+        "build/.objs/opengl/linux/x86_64/debug/__/Public/Dependencies/glad/src/glad.c.o"
     }
 }

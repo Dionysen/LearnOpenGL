@@ -23,7 +23,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action,
                   int mods);
 unsigned int loadTexture(char const *path);
 unsigned int loadCubemap(vector<std::string> faces);
-void renderScene(const Shader &shader);
+void renderSceneFloor(const Shader &shader);
+void renderSceneCube(const Shader &shader);
 void renderCube();
 void renderQuad();
 // settings
@@ -105,6 +106,8 @@ int main() {
                              "shaders/shadow_mapping_depth.fs");
     Shader debugDepthQuad("shaders/debug_quad.vs",
                           "shaders/debug_quad_depth.fs");
+    Shader shader("shaders/shadow_mapping.vs", "shaders/shadow_mapping.fs");
+
     // load models
     // -----------
     // Model ourModel("../Public/assets/nanosuit/nanosuit.obj");
@@ -141,6 +144,7 @@ int main() {
     // load textures
     // -------------
     unsigned int woodTexture = loadTexture("../Public/assets/wood.png");
+    unsigned int boxTexture = loadTexture("../Public/assets/container2.png");
 
     // configure depth map FBO
     // -----------------------
@@ -155,8 +159,10 @@ int main() {
                  SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    GLfloat borderColor[] = {1.0, 1.0, 1.0, 1.0};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
     // attach depth texture as FBO's depth buffer
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
@@ -169,6 +175,10 @@ int main() {
     // --------------------
     debugDepthQuad.use();
     debugDepthQuad.setInt("depthMap", 0);
+    shader.use();
+    shader.setInt("diffuseTexture", 0);
+    shader.setInt("shadowMap", 1);
+    // 采样器从0开始，依次采样
 
     // lighting info
     // -------------
@@ -205,7 +215,7 @@ int main() {
         // --------------------------------------------------------------
         glm::mat4 lightProjection, lightView;
         glm::mat4 lightSpaceMatrix;
-        float near_plane = 1.0f, far_plane = 7.5f;
+        float near_plane = 1.0f, far_plane = 20.5f;
         lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane,
                                      far_plane); // 正交投影
         lightView =
@@ -221,12 +231,37 @@ int main() {
         glClear(GL_DEPTH_BUFFER_BIT);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, woodTexture);
-        renderScene(simpleDepthShader);
+        renderSceneFloor(simpleDepthShader);
+        renderSceneCube(simpleDepthShader);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // reset viewport
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // render scene as normal using the generated depth/shadow map
+        // --------------------------------------------------------------
+        shader.use();
+        glm::mat4 projection = glm::perspective(
+            glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT,
+            0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        shader.setMat4("projection", projection);
+        shader.setMat4("view", view);
+        // set light uniforms
+        shader.setVec3("viewPos", camera.Position);
+        shader.setVec3("lightPos", lightPos);
+        shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, woodTexture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, depthMap);
+        renderSceneFloor(shader);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, boxTexture);
+        glCullFace(GL_FRONT);
+        renderSceneCube(shader);
+        glCullFace(GL_BACK);
 
         // render Depth map to quad for visual debugging
         // ---------------------------------------------
@@ -235,7 +270,7 @@ int main() {
         debugDepthQuad.setFloat("far_plane", far_plane);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, depthMap);
-        renderQuad();
+        // renderQuad();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -263,19 +298,26 @@ int main() {
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+    glDeleteVertexArrays(1, &planeVAO);
+    glDeleteBuffers(1, &planeVBO);
+
     glfwTerminate();
     return 0;
 }
 
 // renders the 3D scene
 // --------------------
-void renderScene(const Shader &shader) {
+void renderSceneFloor(const Shader &shader) {
     // floor
     glm::mat4 model = glm::mat4(1.0f);
     shader.setMat4("model", model);
     glBindVertexArray(planeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void renderSceneCube(const Shader &shader) {
     // cubes
+    glm::mat4 model = glm::mat4(1.0f);
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0));
     model = glm::scale(model, glm::vec3(0.5f));
